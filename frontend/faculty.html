@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Portal - EduQuest</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Layout and Sidebar styles are handled by style.css */
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(236, 72, 153, 0.1);
+            color: var(--secondary);
+        }
+
+        /* Main Content Wrapper - Fixes spacing and overflow */
+        .main-content {
+            padding: 2rem;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Section Animations */
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            /* Ensure it fits in grid */
+            min-width: 0;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--secondary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo"
+                    style="text-decoration: none; font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-graduation-cap" style="color: var(--secondary);"></i>
+                    <span class="text-gradient">EduQuest</span>
+                </a>
+
+            </div>
+
+            <a href="#" class="nav-link active" onclick="showSection('dashboard', this)">
+                <i class="fa-solid fa-gauge-high"></i> Dashboard
+            </a>
+            <a href="#" class="nav-link" onclick="showSection('courses', this)">
+                <i class="fa-solid fa-chalkboard"></i> My Courses
+            </a>
+            <a href="#" class="nav-link" onclick="showSection('profile', this)">
+                <i class="fa-solid fa-user"></i> Profile
+            </a>
+
+            <div style="margin-top: auto;">
+                <a href="index.html" class="nav-link" style="color: var(--text-muted);">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                </a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <h2 id="page-title">Faculty Dashboard</h2>
+                        <p style="color: var(--text-muted);">Welcome, Prof. Sharma</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div style="position: relative;">
+                        <button onclick="toggleNotificationDropdown()" class="btn btn-secondary"
+                            style="position: relative;">
+                            <i class="fa-solid fa-bell"></i>
+                            <span
+                                style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; background: var(--text-danger); border-radius: 50%;"></span>
+                        </button>
+
+                        <div id="notification-dropdown" class="glass-panel"
+                            style="display: none; position: absolute; right: 0; top: 110%; width: 300px; padding: 0; z-index: 100; overflow: hidden;">
+                            <div
+                                style="padding: 1rem; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.05);">
+                                <h4 style="margin: 0;">Notifications <span
+                                        style="font-size: 0.8rem; background: var(--primary); padding: 2px 6px; border-radius: 4px; margin-left: 0.5rem;">2</span>
+                                </h4>
+                            </div>
+                            <div style="max-height: 300px; overflow-y: auto;">
+                                <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+                                    <div style="display: flex; gap: 0.75rem;">
+                                        <div style="color: var(--secondary);"><i
+                                                class="fa-solid fa-file-circle-check"></i></div>
+                                        <div>
+                                            <div style="font-weight: 500; font-size: 0.9rem; margin-bottom: 0.25rem;">QP
+                                                Generated</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Question Paper for
+                                                CS101 generated successfully.</div>
+                                            <div
+                                                style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">
+                                                10 mins ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="padding: 1rem;">
+                                    <div style="display: flex; gap: 0.75rem;">
+                                        <div style="color: var(--text-main);"><i class="fa-solid fa-calendar-check"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 500; font-size: 0.9rem; margin-bottom: 0.25rem;">
+                                                Class Schedule</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Upcoming class:
+                                                Data Structures (Sem 3) at 10:00 AM.</div>
+                                            <div
+                                                style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">
+                                                1 hour ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                style="padding: 0.75rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem;">
+                                <a href="#" style="color: var(--secondary); text-decoration: none;">View All</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="position: relative;">
+                        <button onclick="toggleProfileDropdown()"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: var(--secondary); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1rem;">
+                            S
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div id="header-profile-dropdown" class="glass-panel"
+                            style="display: none; position: absolute; right: 0; top: 110%; width: 200px; padding: 0.5rem; z-index: 100;">
+                            <div
+                                style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem;">
+                                <div style="font-weight: 600;">Prof. Sharma</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">Faculty</div>
+                            </div>
+                            <a href="#" class="nav-link"
+                                onclick="showSection('profile', this); toggleProfileDropdown(); return false;"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: var(--text-main); text-decoration: none; border-radius: 4px;">
+                                <i class="fa-solid fa-user"></i> My Profile
+                            </a>
+                            <a href="index.html" class="nav-link"
+                                style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: var(--text-danger); text-decoration: none; border-radius: 4px;">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dashboard" class="section active">
+                <!-- Welcome & Stats -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="glass-panel" style="padding: 1.5rem;">
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">Assigned Courses</div>
+                        <div id="stat-courses" style="font-size: 2.5rem; font-weight: 700; color: var(--secondary);">0
+                        </div>
+                    </div>
+                    <div class="glass-panel" style="padding: 1.5rem;">
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">Questions Added</div>
+                        <div id="stat-questions" style="font-size: 2.5rem; font-weight: 700;">0</div>
+                    </div>
+                    <div class="glass-panel" style="padding: 1.5rem;">
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">COs Created</div>
+                        <div id="stat-cos" style="font-size: 2.5rem; font-weight: 700;">0</div>
+                    </div>
+                    <div class="glass-panel" style="padding: 1.5rem;">
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">Academic Year</div>
+                        <div id="stat-ay" style="font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;">-</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 1rem;">Recent Activity</h3>
+                <div class="glass-panel" style="padding: 2rem; text-align: center; color: var(--text-muted);">
+                    Authentication and Recent Activity modules coming next...
+                </div>
+            </div>
+
+            <div id="courses" class="section">
+                <div id="faculty-courses-list"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- Dynamic Courses -->
+                </div>
+            </div>
+
+
+
+            <div id="course-details" class="section">
+                <div style="margin-bottom: 2rem;">
+                    <button class="btn btn-secondary"
+                        onclick="showSection('courses', document.querySelector('[onclick=&quot;showSection(\'courses\', this)&quot;]'))"
+                        style="margin-bottom: 1rem;">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Courses
+                    </button>
+                    <div class="glass-panel"
+                        style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2 id="cd-title">CS101: Data Structures</h2>
+                            <p id="cd-subtitle" style="color: var(--text-muted);">B.Tech CSE • Sem 3 • Core</p>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn btn-secondary" onclick="switchCourseTab('cos')">Course Outcomes</button>
+                            <button class="btn btn-secondary" onclick="switchCourseTab('questions')">Question
+                                Bank</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CO Tab -->
+                <div id="tab-cos" class="course-tab">
+                    <div class="glass-panel" style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <h3>Course Outcomes (COs)</h3>
+                            <button class="btn btn-primary" onclick="openCOModal()"><i class="fa-solid fa-plus"></i> Add
+                                CO</button>
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse; color: var(--text-muted);">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border); text-align: left;">
+                                    <th style="padding: 0.5rem;">CO Code</th>
+                                    <th>Description</th>
+                                    <th>Bloom's Level</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="co-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Questions Tab -->
+                <div id="tab-questions" class="course-tab" style="display: none;">
+                    <div class="glass-panel" style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <h3>Question Bank</h3>
+                            <button class="btn btn-primary" onclick="openQuestionModal()"><i
+                                    class="fa-solid fa-plus"></i> Add Question</button>
+                        </div>
+                        <div id="qbank-list"></div>
+                    </div>
+                </div>
+
+                <!-- CO Modal -->
+                <div id="co-modal"
+                    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+                    <div class="glass-panel" style="width: 100%; max-width: 500px; padding: 2rem;">
+                        <h3 style="margin-bottom: 1.5rem;">Add Course Outcome</h3>
+                        <form id="co-form">
+                            <input type="hidden" id="co-id">
+                            <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">CO
+                                Code</label>
+                            <input type="text" id="co-code" required placeholder="e.g. CO1"
+                                style="margin-bottom: 1rem;">
+
+                            <label
+                                style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Description</label>
+                            <textarea id="co-desc" required rows="3" class="glass-input"
+                                style="width: 100%; margin-bottom: 1rem;"></textarea>
+
+                            <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Bloom's
+                                Level Mapping (Optional)</label>
+                            <select id="co-bloom" style="margin-bottom: 2rem;">
+                                <!-- Dynamic -->
+                            </select>
+
+                            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                                <button type="button" class="btn btn-secondary" onclick="closeCOModal()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Question Modal -->
+                <div id="q-modal"
+                    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+                    <div class="glass-panel" style="width: 100%; max-width: 600px; padding: 2rem;">
+                        <h3 style="margin-bottom: 1.5rem;">Add Question</h3>
+                        <form id="q-form">
+                            <input type="hidden" id="q-id">
+
+                            <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Question
+                                Text</label>
+                            <textarea id="q-text" required rows="3" class="glass-input"
+                                style="width: 100%; margin-bottom: 1rem;"></textarea>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Marks</label>
+                                    <input type="number" id="q-marks" required min="1" style="margin-bottom: 1rem;">
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Unit</label>
+                                    <select id="q-unit" required></select>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Bloom's
+                                        Level</label>
+                                    <select id="q-bloom" required></select>
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Difficulty</label>
+                                    <select id="q-diff" required></select>
+                                </div>
+                            </div>
+                            <!-- CO Mapping -->
+                            <div style="margin-bottom: 2rem;">
+                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Map to
+                                    CO</label>
+                                <select id="q-co" required></select>
+                            </div>
+
+                            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                                <button type="button" class="btn btn-secondary" onclick="closeQModal()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profile" class="section">
+                <div class="glass-panel" style="padding: 2rem; max-width: 600px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                        My Profile</h3>
+
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="margin-bottom: 1rem; color: var(--secondary);">Basic Information</h4>
+                        <div
+                            style="display: grid; grid-template-columns: 100px 1fr; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Name:</span>
+                            <span style="font-weight: 500;" id="prof-name">Loading...</span>
+                        </div>
+                        <div
+                            style="display: grid; grid-template-columns: 100px 1fr; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Email:</span>
+                            <span style="font-weight: 500;" id="prof-email">Loading...</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 100px 1fr; gap: 1rem; align-items: center;">
+                            <span style="color: var(--text-muted);">Emp ID:</span>
+                            <span style="font-weight: 500;" id="prof-id">Loading...</span>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-bottom: 1rem; color: var(--secondary);">Security Settings</h4>
+                    <form id="pwd-form">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Current
+                            Password</label>
+                        <input type="password" id="p-old" required style="margin-bottom: 1rem; width: 100%;">
+
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">New
+                            Password</label>
+                        <input type="password" id="p-new" required style="margin-bottom: 1rem; width: 100%;">
+
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Confirm New
+                            Password</label>
+                        <input type="password" id="p-confirm" required style="margin-bottom: 2rem; width: 100%;">
+
+                        <div style="text-align: right;">
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="faculty-dashboard.js"></script>
+    <script>
+        function showSection(sectionId, linkElement) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            linkElement.classList.add('active');
+
+            const titles = {
+                'dashboard': 'Faculty Dashboard',
+                'courses': 'My Courses',
+                'profile': 'My Profile'
+            };
+            document.getElementById('page-title').innerText = titles[sectionId];
+        }
+
+        function toggleProfileDropdown() {
+            const el = document.getElementById('header-profile-dropdown');
+            const notif = document.getElementById('notification-dropdown');
+            if (notif) notif.style.display = 'none'; // Close other
+            if (el.style.display === 'none') {
+                el.style.display = 'block';
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
+        function toggleNotificationDropdown() {
+            const el = document.getElementById('notification-dropdown');
+            const prof = document.getElementById('header-profile-dropdown');
+            if (prof) prof.style.display = 'none'; // Close other
+            if (el.style.display === 'none') {
+                el.style.display = 'block';
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('header-profile-dropdown');
+            const notif = document.getElementById('notification-dropdown');
+
+            // Close Profile
+            if (dropdown && dropdown.style.display === 'block') {
+                if (!dropdown.contains(e.target) && !e.target.closest('button[onclick="toggleProfileDropdown()"]')) {
+                    dropdown.style.display = 'none';
+                }
+            }
+
+            // Close Notification
+            if (notif && notif.style.display === 'block') {
+                if (!notif.contains(e.target) && !e.target.closest('button[onclick="toggleNotificationDropdown()"]')) {
+                    notif.style.display = 'none';
+                }
+            }
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const layout = document.querySelector('.layout');
+            sidebar.classList.toggle('collapsed');
+            layout.classList.toggle('sidebar-closed');
+        }
+    </script>
+</body>
+
+</html>

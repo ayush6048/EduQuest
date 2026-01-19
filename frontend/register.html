@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - EduQuest</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <!-- Background Elements -->
+        <div
+            style="position: absolute; top: 20%; left: 20%; width: 300px; height: 300px; background: var(--primary); filter: blur(150px); opacity: 0.2;">
+        </div>
+        <div
+            style="position: absolute; bottom: 20%; right: 20%; width: 300px; height: 300px; background: var(--secondary); filter: blur(150px); opacity: 0.2;">
+        </div>
+
+        <div class="glass-panel login-card fade-in">
+            <a href="index.html" class="brand-logo text-gradient" style="text-decoration: none;"><i
+                    class="fa-solid fa-graduation-cap"></i> EduQuest</a>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Create a new account</p>
+
+            <form id="register-form" onsubmit="handleRegister(event)">
+
+                <div style="text-align: left; margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">I
+                        am a...</label>
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 8px;">
+                        <button type="button" class="btn active-role" id="role-admin" onclick="setRole('admin')"
+                            style="width:100%; text-align:center; padding: 0.5rem; background: var(--primary); border: none;">Admin</button>
+                        <button type="button" class="btn" id="role-faculty" onclick="setRole('faculty')"
+                            style="width:100%; text-align:center; padding: 0.5rem; background: transparent; border: none; color: var(--text-muted);">Faculty</button>
+                    </div>
+                </div>
+
+                <!-- Admin & Faculty Common Fields -->
+                <div style="text-align: left; margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Username /
+                        ID</label>
+                    <input type="text" id="username" class="glass-input" required placeholder="Pick a username"
+                        style="width: 100%; padding: 0.8rem;">
+                </div>
+
+                <div style="text-align: left; margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Password</label>
+                    <input type="password" id="password" class="glass-input" required placeholder="Choose a password"
+                        style="width: 100%; padding: 0.8rem;">
+                </div>
+
+                <!-- Faculty Specific Fields (Hidden by default) -->
+                <div id="faculty-fields" style="display: none;">
+                    <div style="text-align: left; margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Full
+                            Name</label>
+                        <input type="text" id="name" class="glass-input" placeholder="John Doe"
+                            style="width: 100%; padding: 0.8rem;">
+                    </div>
+                    <div style="text-align: left; margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Email</label>
+                        <input type="email" id="email" class="glass-input" placeholder="john@eduquest.edu"
+                            style="width: 100%; padding: 0.8rem;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; justify-content: center; padding: 1rem; margin-top: 1rem;">
+                    Register <i class="fa-solid fa-user-plus"></i>
+                </button>
+
+                <p id="message-msg" style="margin-top: 1rem; text-align: center; font-size: 0.9rem;"></p>
+
+                <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Already have an account? <a
+                            href="index.html" style="color: var(--primary);">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        let currentRole = 'admin';
+
+        function setRole(role) {
+            currentRole = role;
+            const adminBtn = document.getElementById('role-admin');
+            const facultyBtn = document.getElementById('role-faculty');
+            const facultyFields = document.getElementById('faculty-fields');
+
+            if (role === 'admin') {
+                adminBtn.style.background = 'var(--primary)';
+                adminBtn.style.color = '#fff';
+                facultyBtn.style.background = 'transparent';
+                facultyBtn.style.color = 'var(--text-muted)';
+                facultyFields.style.display = 'none';
+            } else {
+                facultyBtn.style.background = 'var(--primary)';
+                facultyBtn.style.color = '#fff';
+                adminBtn.style.background = 'transparent';
+                adminBtn.style.color = 'var(--text-muted)';
+                facultyFields.style.display = 'block';
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const msgEl = document.getElementById('message-msg');
+
+            const payload = { role: currentRole, username, password };
+
+            if (currentRole === 'faculty') {
+                payload.name = document.getElementById('name').value.trim();
+                payload.email = document.getElementById('email').value.trim();
+            }
+
+            msgEl.innerText = 'Registering...';
+            msgEl.style.color = 'var(--text-muted)';
+
+            try {
+                const API_URL = 'http://localhost:5000/api'; // Or use connection from data.js if exposed
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    msgEl.style.color = '#10b981'; // Green
+                    msgEl.innerText = 'Success! Redirecting to login...';
+                    setTimeout(() => window.location.href = 'index.html', 1500);
+                } else {
+                    msgEl.style.color = '#ef4444'; // Red
+                    msgEl.innerText = result.message || 'Registration Failed';
+                }
+            } catch (error) {
+                console.error(error);
+                msgEl.style.color = '#ef4444';
+                msgEl.innerText = 'Network Error';
+            }
+        }
+    </script>
+</body>
+
+</html>

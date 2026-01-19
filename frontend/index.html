@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduQuest - Academic Administration</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .role-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .role-btn:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .role-btn i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <!-- Background Elements -->
+        <div
+            style="position: absolute; top: 20%; left: 20%; width: 300px; height: 300px; background: var(--primary); filter: blur(150px); opacity: 0.2;">
+        </div>
+        <div
+            style="position: absolute; bottom: 20%; right: 20%; width: 300px; height: 300px; background: var(--secondary); filter: blur(150px); opacity: 0.2;">
+        </div>
+
+        <div class="glass-panel login-card fade-in">
+            <span class="brand-logo text-gradient"><i class="fa-solid fa-graduation-cap"></i> EduQuest</span>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Sign in to your account</p>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div style="text-align: left; margin-bottom: 1rem;">
+                    <label
+                        style="display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Role</label>
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 8px;">
+                        <button type="button" class="btn active-role" id="role-admin" onclick="setRole('admin')"
+                            style="width:100%; text-align:center; padding: 0.5rem; background: var(--primary); border: none;">Admin</button>
+                        <button type="button" class="btn" id="role-faculty" onclick="setRole('faculty')"
+                            style="width:100%; text-align:center; padding: 0.5rem; background: transparent; border: none; color: var(--text-muted);">Faculty</button>
+                    </div>
+                </div>
+
+                <div style="text-align: left; margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Username /
+                        ID</label>
+                    <input type="text" id="username" class="glass-input" required placeholder="admin"
+                        style="width: 100%; padding: 0.8rem;">
+                </div>
+
+                <div style="text-align: left; margin-bottom: 2rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Password</label>
+                    <input type="password" id="password" class="glass-input" required placeholder="••••••"
+                        style="width: 100%; padding: 0.8rem;">
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; justify-content: center; padding: 1rem;">
+                    Login <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p id="error-msg"
+                    style="color: #ef4444; margin-top: 1rem; text-align: center; font-size: 0.9rem; display: none;"></p>
+            </form>
+            <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Don't have an account? <a href="register.html"
+                        style="color: var(--primary);">Register</a></p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        let currentRole = 'admin';
+
+        function setRole(role) {
+            currentRole = role;
+            document.getElementById('role-admin').style.background = role === 'admin' ? 'var(--primary)' : 'transparent';
+            document.getElementById('role-admin').style.color = role === 'admin' ? '#fff' : 'var(--text-muted)';
+
+            document.getElementById('role-faculty').style.background = role === 'faculty' ? 'var(--primary)' : 'transparent';
+            document.getElementById('role-faculty').style.color = role === 'faculty' ? '#fff' : 'var(--text-muted)';
+
+            document.getElementById('username').placeholder = role === 'admin' ? 'admin' : 'f1';
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            const error = document.getElementById('error-msg');
+
+            const result = await apiLogin(currentRole, user, pass);
+
+            if (result.success) {
+                localStorage.setItem('user_role', result.role);
+                if (result.user_id) {
+                    localStorage.setItem('user_id', result.user_id);
+                }
+                window.location.href = result.role === 'admin' ? 'admin.html' : 'faculty.html';
+            } else {
+                showError(result.message || 'Invalid Credentials');
+            }
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('error-msg');
+            el.innerText = msg;
+            el.style.display = 'block';
+        }
+    </script>
+    </div>
+
+</body>
+
+</html>
