@@ -1,0 +1,441 @@
+{
+    "regulations": [
+        {
+            "id": "r1",
+            "name": "R23",
+            "academicYear": "2023-24",
+            "status": "Active"
+        },
+        {
+            "id": "r2",
+            "name": "R20",
+            "academicYear": "2020-21",
+            "status": "Inactive"
+        }
+    ],
+    "programs": [
+        {
+            "id": "p1",
+            "name": "B.Tech",
+            "code": "BT",
+            "duration": 4,
+            "status": "Active",
+            "regulationId": "r1"
+        },
+        {
+            "id": "p2",
+            "name": "M.Tech",
+            "code": "MT",
+            "duration": 2,
+            "status": "Active",
+            "regulationId": "r1"
+        },
+        {
+            "id": "p3",
+            "name": "MBA",
+            "code": "MBA",
+            "duration": 2,
+            "status": "Inactive",
+            "regulationId": "r2"
+        }
+    ],
+    "branches": [
+        {
+            "id": "b1",
+            "name": "Computer Science",
+            "code": "CSE",
+            "status": "Active"
+        },
+        {
+            "id": "b2",
+            "name": "Electronics",
+            "code": "ECE",
+            "status": "Active"
+        },
+        {
+            "id": "b3",
+            "name": "Mechanical",
+            "code": "MECH",
+            "status": "Active"
+        },
+        {
+            "id": "b4",
+            "name": "Civil",
+            "code": "CIVIL",
+            "status": "Inactive"
+        },
+        {
+            "id": "b5",
+            "name": "Data Science",
+            "code": "DS",
+            "status": "Active"
+        }
+    ],
+    "pb_mappings": [
+        {
+            "id": "m1",
+            "programId": "p1",
+            "branchId": "b1",
+            "status": "Active"
+        },
+        {
+            "id": "m2",
+            "programId": "p1",
+            "branchId": "b2",
+            "status": "Active"
+        },
+        {
+            "id": "m3",
+            "programId": "p1",
+            "branchId": "b3",
+            "status": "Active"
+        },
+        {
+            "id": "m4",
+            "programId": "p1",
+            "branchId": "b4",
+            "status": "Inactive"
+        },
+        {
+            "id": "m5",
+            "programId": "p2",
+            "branchId": "b1",
+            "status": "Inactive"
+        }
+    ],
+    "courses": [
+        {
+            "id": "c1",
+            "code": "CS101",
+            "name": "Data Structures",
+            "mappingId": "m1",
+            "regulationId": "r1",
+            "year": "II",
+            "semester": "I",
+            "credits": 4,
+            "type": "Theory",
+            "category": "Core",
+            "facultyId": "f1",
+            "status": "Active"
+        },
+        {
+            "id": "c2",
+            "code": "CS102",
+            "name": "Algorithms",
+            "mappingId": "m1",
+            "regulationId": "r1",
+            "year": "II",
+            "semester": "II",
+            "credits": 4,
+            "type": "Theory",
+            "category": "Core",
+            "facultyId": "f1",
+            "status": "Active"
+        },
+        {
+            "id": "c3",
+            "code": "EC201",
+            "name": "Digital Circuits",
+            "mappingId": "m2",
+            "regulationId": "r1",
+            "year": "II",
+            "semester": "I",
+            "credits": 3,
+            "type": "Theory",
+            "category": "Core",
+            "facultyId": "f2",
+            "status": "Active"
+        },
+        {
+            "id": "c4",
+            "code": "ME301",
+            "name": "Thermodynamics",
+            "mappingId": "m3",
+            "regulationId": "r1",
+            "year": "III",
+            "semester": "I",
+            "credits": 4,
+            "type": "Theory",
+            "category": "Core",
+            "facultyId": null,
+            "status": "Active"
+        },
+        {
+            "id": "c5",
+            "code": "CS105",
+            "name": "Web Tech",
+            "mappingId": "m1",
+            "regulationId": "r1",
+            "year": "III",
+            "semester": "I",
+            "credits": 3,
+            "type": "Lab",
+            "category": "Professional Elective",
+            "facultyId": null,
+            "status": "Active"
+        }
+    ],
+    "faculty": [
+        {
+            "id": "f1",
+            "empId": "FAC001",
+            "title": "Prof.",
+            "name": "Sharma",
+            "email": "sharma@eduquest.edu",
+            "phone": "9876543210",
+            "branchId": "b1",
+            "type": "Faculty",
+            "password": "pass",
+            "status": "Active"
+        },
+        {
+            "id": "f2",
+            "empId": "FAC002",
+            "title": "Dr.",
+            "name": "Emily Chen",
+            "email": "emily@eduquest.edu",
+            "phone": "9876543211",
+            "branchId": "b2",
+            "type": "Faculty",
+            "password": "pass",
+            "status": "Active"
+        },
+        {
+            "id": "f3",
+            "empId": "FAC003",
+            "title": "Dr.",
+            "name": "Raj",
+            "email": "raj@eduquest.edu",
+            "phone": "9876543212",
+            "branchId": "b3",
+            "type": "Faculty",
+            "password": "pass",
+            "status": "Active"
+        },
+        {
+            "id": "f4",
+            "empId": "FAC004",
+            "title": "Prof.",
+            "name": "Gupta",
+            "email": "gupta@eduquest.edu",
+            "phone": "9876543213",
+            "branchId": "b1",
+            "type": "Faculty",
+            "password": "pass",
+            "status": "Inactive"
+        },
+        {
+            "id": "f5",
+            "empId": "FAC005",
+            "title": "Dr.",
+            "name": "New Faculty 1",
+            "email": "f5@eduquest.edu",
+            "phone": "9876543214",
+            "branchId": "b1",
+            "type": "Faculty",
+            "password": "pass",
+            "status": "Active"
+        },
+        {
+            "id": "f6",
+            "empId": "FAC006",
+            "title": "Prof.",
+            "name": "New Faculty 2",
+            "email": "f6@eduquest.edu",
+            "phone": "9876543215",
+            "branchId": "b2",
+            "type": "Faculty",
+            "password": "pass",
+            "status": "Active"
+        }
+    ],
+    "fc_mappings": [
+        {
+            "id": "fc1",
+            "facultyId": "f1",
+            "courseId": "c1",
+            "academicYear": "2025-26",
+            "status": "Active"
+        },
+        {
+            "id": "fc2",
+            "facultyId": "f2",
+            "courseId": "c3",
+            "academicYear": "2025-26",
+            "status": "Active"
+        }
+    ],
+    "blooms": [
+        {
+            "id": "bl1",
+            "name": "Remember",
+            "status": "Active"
+        },
+        {
+            "id": "bl2",
+            "name": "Understand",
+            "status": "Active"
+        },
+        {
+            "id": "bl3",
+            "name": "Apply",
+            "status": "Active"
+        },
+        {
+            "id": "bl4",
+            "name": "Analyze",
+            "status": "Active"
+        },
+        {
+            "id": "bl5",
+            "name": "Evaluate",
+            "status": "Active"
+        },
+        {
+            "id": "bl6",
+            "name": "Create",
+            "status": "Active"
+        }
+    ],
+    "difficulties": [
+        {
+            "id": "d1",
+            "name": "Easy",
+            "status": "Active"
+        },
+        {
+            "id": "d2",
+            "name": "Moderate",
+            "status": "Active"
+        },
+        {
+            "id": "d3",
+            "name": "Hard",
+            "status": "Active"
+        }
+    ],
+    "units": [
+        {
+            "id": "u1",
+            "name": "Unit-1",
+            "status": "Active"
+        },
+        {
+            "id": "u2",
+            "name": "Unit-2",
+            "status": "Active"
+        },
+        {
+            "id": "u3",
+            "name": "Unit-3",
+            "status": "Active"
+        },
+        {
+            "id": "u4",
+            "name": "Unit-4",
+            "status": "Active"
+        },
+        {
+            "id": "u5",
+            "name": "Unit-5",
+            "status": "Active"
+        }
+    ],
+    "course_outcomes": [
+        {
+            "id": "co1",
+            "courseId": "c1",
+            "code": "CO1",
+            "description": "Analyze asymptotic notation",
+            "bloomId": "bl4",
+            "status": "Active"
+        },
+        {
+            "id": "co2",
+            "courseId": "c1",
+            "code": "CO2",
+            "description": "Implement tree data structures",
+            "bloomId": "bl3",
+            "status": "Active"
+        }
+    ],
+    "questions": [
+        {
+            "id": "q1",
+            "courseId": "c1",
+            "text": "Explain the time complexity of QuickSort.",
+            "marks": 5,
+            "difficultyId": "d2",
+            "bloomId": "bl2",
+            "unitId": "u1",
+            "co": "CO1",
+            "status": "Active"
+        },
+        {
+            "id": "q2",
+            "courseId": "c1",
+            "text": "Define a Binary Search Tree.",
+            "marks": 2,
+            "difficultyId": "d1",
+            "bloomId": "bl1",
+            "unitId": "u1",
+            "co": "CO1",
+            "status": "Active"
+        },
+        {
+            "id": "q3",
+            "courseId": "c2",
+            "text": "Design an algorithm to find the shortest path.",
+            "marks": 10,
+            "difficultyId": "d3",
+            "bloomId": "bl6",
+            "unitId": "u3",
+            "co": "CO3",
+            "status": "Active"
+        },
+        {
+            "id": "q4",
+            "courseId": "c3",
+            "text": "Explain logic gates.",
+            "marks": 5,
+            "difficultyId": "d1",
+            "bloomId": "bl2",
+            "unitId": "u1",
+            "co": "CO1",
+            "status": "Active"
+        },
+        {
+            "id": "q5",
+            "courseId": "c1",
+            "text": "What is a stack?",
+            "marks": 2,
+            "difficultyId": "d1",
+            "bloomId": "bl1",
+            "unitId": "u1",
+            "co": "CO1",
+            "status": "Active"
+        },
+        {
+            "id": "q6",
+            "courseId": "c1",
+            "text": "Explain BFS.",
+            "marks": 5,
+            "difficultyId": "d2",
+            "bloomId": "bl2",
+            "unitId": "u2",
+            "co": "CO2",
+            "status": "Active"
+        },
+        {
+            "id": "q7",
+            "courseId": "c1",
+            "text": "Differentiate between Tree and Graph.",
+            "marks": 5,
+            "difficultyId": "d2",
+            "bloomId": "bl4",
+            "unitId": "u2",
+            "co": "CO2",
+            "status": "Active"
+        }
+    ]
+}
